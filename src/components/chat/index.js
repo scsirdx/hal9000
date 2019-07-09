@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { ChatFeed, Message } from 'react-chat-ui';
+import { ApiAiClient } from 'api-ai-javascript';
 
 import './Chat.css';
 
-const ApiAi = require('api-ai-javascript');
-const client = new ApiAi.ApiAiClient({
+const client = new ApiAiClient({
   accessToken: '9adc7d8b03ba4e9f9c01f084f3d92765',
 });
 
