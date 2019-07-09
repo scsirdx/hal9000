@@ -3,6 +3,13 @@
   margin: 0 auto;
 }
 
+.chat-wrap {
+  overflow:scroll;
+  height: calc(100vh - 200px);
+  display: flex;
+  flex-direction: column-reverse;
+}
+
 .chat-input {
   width: 70%;
   float: left;

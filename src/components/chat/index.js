@@ -46,22 +46,24 @@ function Chat() {
 
   return (
     <div className="Chat">
-      <ChatFeed
-        messages={messages}
-        isTyping={isTyping}
-        hasInputField={false}
-        showSenderName
-        bubblesCentered={false}
-        bubbleStyles={{
-          text: {
-            fontSize: 18,
-          },
-          chatbubble: {
-            borderRadius: 18,
-            padding: 16,
-          },
-        }}
-      />
+      <div className="chat-wrap">
+        <ChatFeed
+          messages={messages}
+          isTyping={isTyping}
+          hasInputField={false}
+          showSenderName
+          bubblesCentered={false}
+          bubbleStyles={{
+            text: {
+              fontSize: 18,
+            },
+            chatbubble: {
+              borderRadius: 18,
+              padding: 16,
+            },
+          }}
+        />
+      </div>
       <input
         className="chat-input"
         onChange={({ target: { value } }) => setUserMessage(value)}
