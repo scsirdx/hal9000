@@ -1,0 +1,24 @@
+.Chat {
+  width: 600px;
+  margin: 0 auto;
+}
+
+.chat-input {
+  width: 70%;
+  float: left;
+  font-size: 18px;
+  border: none;
+  padding: 16px;
+  border-radius: 18px;
+  margin-top: 30px;
+}
+
+.chat-send {
+  width: 20%;
+  font-size: 18px;
+  border: none;
+  padding: 16px;
+  border-radius: 18px;
+  margin-top: 30px;
+  background-color: aquamarine;
+}
