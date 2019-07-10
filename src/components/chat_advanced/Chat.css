@@ -5,7 +5,7 @@
 
 .chat-wrap {
   overflow:scroll;
-  height: calc(100vh - 200px);
+  height: calc(100vh - 100px);
   display: flex;
   flex-direction: column-reverse;
 }
