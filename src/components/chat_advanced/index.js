@@ -4,8 +4,8 @@ import Feed from './Feed';
 
 import './Chat.scss';
 
-const user = document.bot_context
-  ? JSON.parse(document.bot_context.getUser())
+const user = window.bot_context
+  ? JSON.parse(window.bot_context.getUser())
   : null;
 
 // FIXME: url from env/config
