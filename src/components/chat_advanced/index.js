@@ -4,6 +4,10 @@ import Feed from './Feed';
 
 import './Chat.scss';
 
+const user = document.bot_context
+  ? JSON.parse(document.bot_context.getUser())
+  : null;
+
 // FIXME: url from env/config
 const url = 'https://peaceful-meadow-87500.herokuapp.com/';
 
@@ -74,12 +78,16 @@ function Chat() {
       const { sessionId, intents } = await res.json();
       setSessionId(sessionId);
       setIntents(cleanIntents(intents));
+      setMessages(messages => [
+        ...messages,
+        { coach: 1, message: user ? `Hello, ${user.first_name}` : 'Hello' },
+      ]);
       setIsTyping(false);
     })();
   }, []);
 
   useEffect(() => {
-    if (sessionId) sendMessage('Hello', true);
+    if (sessionId && user) sendMessage('Hello', true);
   }, [sessionId]);
 
   return (
