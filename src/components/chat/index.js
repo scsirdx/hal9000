@@ -14,6 +14,8 @@ function Chat() {
   const [userMessage, setUserMessage] = useState('');
 
   const sendMessage = message => {
+    if (!message) return;
+
     // HACK: for initial load -----
     userMessage &&
       // ----- HACK
@@ -64,14 +66,16 @@ function Chat() {
           }}
         />
       </div>
+      <hr />
       <input
+        disabled={isTyping}
         className="chat-input"
         onChange={({ target: { value } }) => setUserMessage(value)}
         value={userMessage}
         onKeyPress={({ key }) => key === 'Enter' && sendMessage(userMessage)}
       />
       <button
-        disabled={isTyping}
+        disabled={isTyping || !userMessage}
         className="chat-send"
         onClick={() => sendMessage(userMessage)}
       >
