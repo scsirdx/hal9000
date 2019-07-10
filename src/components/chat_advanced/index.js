@@ -4,9 +4,9 @@ import Feed from './Feed';
 
 import './Chat.scss';
 
-const user = window.bot_context
-  ? JSON.parse(window.bot_context.getUser())
-  : null;
+const root = window || document;
+
+const user = root.bot_context ? JSON.parse(root.bot_context.getUser()) : null;
 
 // FIXME: url from env/config
 const url = 'https://peaceful-meadow-87500.herokuapp.com/';
