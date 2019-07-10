@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { ChatFeed, Message } from 'react-chat-ui';
 
-import './Chat.css';
+import Feed from './Feed';
+
+import './Chat.scss';
 
 // FIXME: url from env/config
 const url = 'https://peaceful-meadow-87500.herokuapp.com/';
@@ -17,7 +18,9 @@ function Chat() {
 
   const cleanIntents = intents =>
     intents
-      .filter(i => i.displayName.startsWith('freeletics'))
+      .filter(
+        i => i.displayName.startsWith('freeletics') && i.trainingPhrases.length,
+      )
       .map(i => ({
         displayName: i.displayName,
         inputContextNames: i.inputContextNames.map(
@@ -41,10 +44,7 @@ function Chat() {
     // HACK: for initial load -----
     !hidden &&
       // ----- HACK
-      setMessages(messages => [
-        ...messages,
-        new Message({ id: 0, message: message }),
-      ]);
+      setMessages(messages => [...messages, { coach: 0, message: message }]);
 
     setIsTyping(true);
 
@@ -58,10 +58,7 @@ function Chat() {
       });
       const { response, context } = await res.json();
 
-      setMessages(messages => [
-        ...messages,
-        new Message({ id: 1, message: response }),
-      ]);
+      setMessages(messages => [...messages, { coach: 1, message: response }]);
       setContext(cleanContext(context));
       setUserMessage('');
     } catch (err) {
@@ -88,43 +85,28 @@ function Chat() {
   return (
     <div className="Chat">
       <div className="chat-wrap">
-        <ChatFeed
-          messages={messages}
-          isTyping={isTyping}
-          hasInputField={false}
-          showSenderName
-          bubblesCentered={false}
-          bubbleStyles={{
-            text: {
-              fontSize: 18,
-            },
-            chatbubble: {
-              borderRadius: 18,
-              padding: 16,
-            },
-          }}
-        />
-        <hr />
-        {intents
-          .filter(i =>
-            context.length
-              ? i.inputContextNames.length &&
-                i.inputContextNames.reduce(
-                  (res, ic) => (res ? context.includes(ic) : res),
-                  true,
-                )
-              : !i.inputContextNames.length,
-          )
-          .map(i => (
-            <button
-              key={i.displayName}
-              onClick={() => sendMessage(i.trainingPhrase)}
-              disabled={isTyping}
-            >
-              {i.trainingPhrase}
-            </button>
-          ))}
+        <Feed messages={messages} isTyping={isTyping} />
       </div>
+      <hr />
+      {intents
+        .filter(i =>
+          context.length
+            ? i.inputContextNames.length &&
+              i.inputContextNames.reduce(
+                (res, ic) => (res ? context.includes(ic) : res),
+                true,
+              )
+            : !i.inputContextNames.length,
+        )
+        .map(i => (
+          <button
+            key={i.displayName}
+            onClick={() => sendMessage(i.trainingPhrase)}
+            disabled={isTyping}
+          >
+            {i.trainingPhrase}
+          </button>
+        ))}
       <hr />
       <input
         disabled={isTyping}
