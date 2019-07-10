@@ -86,35 +86,30 @@ function Chat() {
     })();
   }, []);
 
-  useEffect(() => {
-    if (sessionId && user) sendMessage('Hello', true);
-  }, [sessionId]);
+  // useEffect(() => {
+  //   if (sessionId && user) sendMessage('Hello', true);
+  // }, [sessionId]);
 
   return (
     <div className="Chat">
       <div className="chat-wrap">
-        <Feed messages={messages} isTyping={isTyping} />
+        <Feed
+          {...{
+            messages,
+            isTyping,
+            sendMessage,
+            possibleIntents: intents.filter(i =>
+              context.length
+                ? i.inputContextNames.length &&
+                  i.inputContextNames.reduce(
+                    (res, ic) => (res ? context.includes(ic) : res),
+                    true,
+                  )
+                : !i.inputContextNames.length,
+            ),
+          }}
+        />
       </div>
-      <hr />
-      {intents
-        .filter(i =>
-          context.length
-            ? i.inputContextNames.length &&
-              i.inputContextNames.reduce(
-                (res, ic) => (res ? context.includes(ic) : res),
-                true,
-              )
-            : !i.inputContextNames.length,
-        )
-        .map(i => (
-          <button
-            key={i.displayName}
-            onClick={() => sendMessage(i.trainingPhrase)}
-            disabled={isTyping}
-          >
-            {i.trainingPhrase}
-          </button>
-        ))}
       <hr />
       <input
         disabled={isTyping}

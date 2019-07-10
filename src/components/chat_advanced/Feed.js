@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Feed = ({ messages, isTyping }) => (
+const Feed = ({ messages, isTyping, sendMessage, possibleIntents }) => (
   <div className="conversation">
     {/* FIXME: use proper ids */}
     {messages.map((message, i) => (
@@ -8,7 +8,25 @@ const Feed = ({ messages, isTyping }) => (
         {message.message}
       </div>
     ))}
-    {isTyping && <div className="krm">...</div>}
+    {isTyping ? (
+      <div className="krm">...</div>
+    ) : (
+      <React.Fragment>
+        <div className="clear" />
+        <div className="possible-intents">
+          {possibleIntents.map(i => (
+            <button
+              className="intent"
+              key={i.displayName}
+              onClick={() => sendMessage(i.trainingPhrase)}
+              disabled={isTyping}
+            >
+              {i.trainingPhrase}
+            </button>
+          ))}
+        </div>
+      </React.Fragment>
+    )}
   </div>
 );
 

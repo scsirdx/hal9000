@@ -5,7 +5,7 @@
 
 .chat-wrap {
   overflow: scroll;
-  height: calc(100vh - 100px);
+  height: calc(100vh - 140px);
   display: flex;
   flex-direction: column-reverse;
 }
@@ -44,7 +44,7 @@ $c-5: #9b59b6;
 $message-margin: -2.5em -4.1em;
 $message-font-size: 0.7em;
 
-div.conversation {
+.conversation {
   // background: $c-2;
   // border: 0.2em solid $c-2;
   color: $c-3;
@@ -53,11 +53,33 @@ div.conversation {
   // max-width: 21em;
   // overflow: hidden;
 
+  width: 100%;
   border-radius: 0.4rem;
   // overflow: scroll;
   // height: calc(100vh - 100px);
   // display: flex;
   // flex-direction: column-reverse;
+
+  .clear {
+    clear: both;
+    width: 100%;
+  }
+
+  .possible-intents {
+    width: 100%;
+    border-top: $c-2 solid 1px;
+    margin: 6px 0;
+    .intent {
+      float: left;
+      background-color: $c-2;
+      color: white;
+      border-radius: 10px;
+      border: none;
+      padding: 10px 20px;
+      margin: 6px;
+      font-size: 14px;
+    }
+  }
 
   .krm {
     background: $c-1;
