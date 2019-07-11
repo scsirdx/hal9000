@@ -30,8 +30,10 @@ $message-font-size: 0.7em;
   border-radius: 18px;
   margin-top: 10px;
   outline: none;
+  background-color: white;
   &:focus {
     outline: none;
+    background-color: white;
   }
   &::placeholder {
     font-size: 14px;
