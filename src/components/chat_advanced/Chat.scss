@@ -10,10 +10,11 @@ $message-font-size: 0.7em;
 .Chat {
   width: 100vw;
   margin: 0 auto;
+  overflow: hidden;
 }
 
 .chat-wrap {
-  overflow-y: scroll;
+  overflow-y: auto;
   height: calc(100vh - 100px);
   display: flex;
   flex-direction: column-reverse;
@@ -21,7 +22,7 @@ $message-font-size: 0.7em;
 
 .chat-input {
   // width: 70%;
-  width: 100%;
+  width: 90%;
   float: left;
   font-size: 18px;
   border: none;
