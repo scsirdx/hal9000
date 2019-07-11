@@ -5,7 +5,7 @@
 
 .chat-wrap {
   overflow: scroll;
-  height: calc(100vh - 140px);
+  height: calc(100vh - 100px);
   display: flex;
   flex-direction: column-reverse;
 }
@@ -111,6 +111,14 @@ $message-font-size: 0.7em;
     }
   }
 
+  .message {
+    a {
+      color: white;
+      font-weight: bold;
+      display: block;
+    }
+  }
+
   div:last-child {
     margin-bottom: 0;
   }
@@ -135,4 +143,20 @@ $message-font-size: 0.7em;
     color: inherit;
     text-decoration: none;
   }
+}
+
+.dialog-item-enter {
+  opacity: 0.01;
+}
+.dialog-item-enter-active {
+  opacity: 1;
+  transition: opacity 300ms ease-in;
+}
+
+.dialog-item-leave {
+  opacity: 1;
+}
+.dialog-item-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
 }
