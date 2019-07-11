@@ -11,7 +11,7 @@ const Feed = ({ messages, isTyping, sendMessage, possibleIntents }) => {
     <div className="conversation">
       {dialogTransitions.map(({ item: message, props, key }) => (
         <animated.div
-          className={`message ${message.coach === 0 ? 'luky' : 'krm'}`}
+          className={`message ${message.coach ? 'krm' : 'luky'}`}
           key={key}
           style={props}
           dangerouslySetInnerHTML={{ __html: message.message }}

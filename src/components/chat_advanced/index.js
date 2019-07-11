@@ -9,6 +9,9 @@ const root = window || document;
 
 const user = root.bot_context ? JSON.parse(root.bot_context.getUser()) : null;
 
+const inclusiveMinMax = (min, max) =>
+  Math.floor(Math.random() * (max - min + 1)) + min;
+
 // FIXME: url from env/config
 const url = 'https://peaceful-meadow-87500.herokuapp.com/';
 
@@ -43,22 +46,28 @@ function Chat() {
   const cleanContext = context =>
     context.map(c => c.name.split('/').slice(-1)[0]);
 
+  const addMessage = ({ coach, message = '...' }) =>
+    setMessages(messages => [...messages, { coach, message, id: uuid() }]);
+
+  const updateLastMessage = ({ message }) =>
+    setMessages(messages => [
+      ...messages.slice(0, messages.length - 1),
+      { ...messages[messages.length - 1], message },
+    ]);
+
   const sendMessage = async (message, hidden) => {
     if (!message) return;
 
-    // HACK: for initial load -----
+    // HACK: for initial "hidden" message to coach -----
     !hidden &&
       // ----- HACK
-      setMessages(messages => [
-        ...messages,
-        { coach: 0, message: message, id: uuid() },
-      ]);
+      addMessage({ coach: false, message });
 
     setIsTyping(true);
-    setMessages(messages => [
-      ...messages,
-      { coach: 1, message: '...', id: uuid() },
-    ]);
+    await new Promise(resolve =>
+      setTimeout(() => resolve(), inclusiveMinMax(200, 800)),
+    );
+    addMessage({ coach: true });
 
     try {
       const res = await fetch(url, {
@@ -70,14 +79,13 @@ function Chat() {
       });
       const { response, context } = await res.json();
 
-      setMessages(messages => [
-        ...messages.slice(0, messages.length - 1),
-        { ...messages[messages.length - 1], message: response },
-      ]);
+      updateLastMessage({ message: response });
+
       setContext(cleanContext(context));
       setUserMessage('');
     } catch (err) {
       console.log(err);
+      updateLastMessage({ message: 'Mein Gehirn ist kaputt' });
     } finally {
       setIsTyping(false);
     }
@@ -85,26 +93,23 @@ function Chat() {
 
   useEffect(() => {
     (async function getInitData() {
-      setMessages(messages => [
-        ...messages,
-        {
-          coach: 1,
-          message: '...',
-          id: uuid(),
-        },
-      ]);
-      const res = await fetch(url);
-      const { sessionId, intents } = await res.json();
-      setSessionId(sessionId);
-      setIntents(cleanIntents(intents));
-      setMessages(messages => [
-        ...messages.slice(0, messages.length - 1),
-        {
-          ...messages[messages.length - 1],
+      addMessage({ coach: true });
+      try {
+        const res = await fetch(url);
+        const { sessionId, intents } = await res.json();
+        setSessionId(sessionId);
+        setIntents(cleanIntents(intents));
+        updateLastMessage({
           message: user ? `Hello, ${user.first_name}` : 'Hello',
-        },
-      ]);
-      setIsTyping(false);
+        });
+      } catch (err) {
+        console.log(err);
+        updateLastMessage({
+          message: 'Mein Gehirn ist kaputt',
+        });
+      } finally {
+        setIsTyping(false);
+      }
     })();
   }, []);
 
