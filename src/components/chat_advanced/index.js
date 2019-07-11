@@ -85,16 +85,23 @@ function Chat() {
 
   useEffect(() => {
     (async function getInitData() {
+      setMessages(messages => [
+        ...messages,
+        {
+          coach: 1,
+          message: '...',
+          id: uuid(),
+        },
+      ]);
       const res = await fetch(url);
       const { sessionId, intents } = await res.json();
       setSessionId(sessionId);
       setIntents(cleanIntents(intents));
       setMessages(messages => [
-        ...messages,
+        ...messages.slice(0, messages.length - 1),
         {
-          coach: 1,
+          ...messages[messages.length - 1],
           message: user ? `Hello, ${user.first_name}` : 'Hello',
-          id: uuid(),
         },
       ]);
       setIsTyping(false);
