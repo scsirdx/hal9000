@@ -128,18 +128,19 @@ function Chat() {
       <hr />
       <input
         disabled={isTyping}
+        placeholder="How can the Coach help you today?"
         className="chat-input"
         onChange={({ target: { value } }) => setUserMessage(value)}
         value={userMessage}
         onKeyPress={({ key }) => key === 'Enter' && sendMessage(userMessage)}
       />
-      <button
+      {/* <button
         disabled={isTyping || !userMessage}
         className="chat-send"
         onClick={() => sendMessage(userMessage)}
       >
         Send
-      </button>
+      </button> */}
     </div>
   );
 }

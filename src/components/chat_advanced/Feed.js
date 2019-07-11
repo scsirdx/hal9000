@@ -18,20 +18,22 @@ const Feed = ({ messages, isTyping, sendMessage, possibleIntents }) => {
         />
       ))}
       <div className="clear"></div>
-      {!isTyping && (
-        <div className="possible-intents">
-          {possibleIntents.map(i => (
-            <button
-              className="intent"
-              key={i.displayName}
-              onClick={() => sendMessage(i.trainingPhrase)}
-              disabled={isTyping}
-            >
-              {i.trainingPhrase}
-            </button>
-          ))}
-        </div>
-      )}
+      <div className="intents-wrapper">
+        {!isTyping && (
+          <div className="possible-intents">
+            {possibleIntents.map(i => (
+              <button
+                className="intent"
+                key={i.displayName}
+                onClick={() => sendMessage(i.trainingPhrase)}
+                disabled={isTyping}
+              >
+                {i.trainingPhrase}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
