@@ -89,7 +89,9 @@ $message-font-size: 0.7em;
       background: transparent;
     }
     ::-webkit-scrollbar-thumb {
-      background: $c-1;
+      // background: $c-1;
+      // background: rgb(34, 34, 34);
+      background: #575757;
     }
 
     .possible-intents {
@@ -105,7 +107,7 @@ $message-font-size: 0.7em;
         background-color: $c-3;
         color: black;
         border-radius: 10px 10px 2px;
-        border: 2px solid rgb(226, 226, 226);
+        border: 2px solid #1d6df3;
         padding: 10px;
         margin: 5px;
         font-size: 16px;
@@ -114,18 +116,19 @@ $message-font-size: 0.7em;
   }
 
   .krm {
-    background: $c-1;
+    color: white;
+    background: #222222;
     float: left;
     text-align: left;
     border-radius: 2px 10px 10px;
   }
 
   .luky {
-    background: $c-3;
-    color: $c-1;
+    background: white;
+    color: #303032;
     float: right;
     border-radius: 10px 10px 2px;
-    border: 2px solid $c-1;
+    border: 2px solid #575757;
   }
 
   .krm,
