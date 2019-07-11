@@ -1,25 +1,24 @@
 import React from 'react';
-import { TransitionGroup, CSSTransition } from 'react-transition-group';
+import { useTransition, animated } from 'react-spring';
 
-const Feed = ({ messages, isTyping, sendMessage, possibleIntents }) => (
-  <div className="conversation">
-    <TransitionGroup className="dialog">
-      {/* FIXME: use proper ids */}
-      {messages.map((message, i) => (
-        <CSSTransition key={i} timeout={500} classNames="dialog-item">
-          <div
-            className={`message ${message.coach === 0 ? 'luky' : 'krm'}`}
-            key={i}
-            dangerouslySetInnerHTML={{ __html: message.message }}
-          />
-        </CSSTransition>
+const Feed = ({ messages, isTyping, sendMessage, possibleIntents }) => {
+  const dialogTransitions = useTransition(messages, message => message.id, {
+    from: { transform: 'translate3d(0,4px,0)' },
+    enter: { transform: 'translate3d(0,0px,0)' },
+    leave: { transform: 'translate3d(0,4px,0)' },
+  });
+  return (
+    <div className="conversation">
+      {dialogTransitions.map(({ item: message, props, key }) => (
+        <animated.div
+          className={`message ${message.coach === 0 ? 'luky' : 'krm'}`}
+          key={key}
+          style={props}
+          dangerouslySetInnerHTML={{ __html: message.message }}
+        />
       ))}
-    </TransitionGroup>
-    {isTyping ? (
-      <div className="krm">...</div>
-    ) : (
-      <React.Fragment>
-        <div className="clear" />
+      <div className="clear"></div>
+      {!isTyping && (
         <div className="possible-intents">
           {possibleIntents.map(i => (
             <button
@@ -32,9 +31,9 @@ const Feed = ({ messages, isTyping, sendMessage, possibleIntents }) => (
             </button>
           ))}
         </div>
-      </React.Fragment>
-    )}
-  </div>
-);
+      )}
+    </div>
+  );
+};
 
 export default Feed;

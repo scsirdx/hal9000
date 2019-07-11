@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import uuid from 'uuid';
 
 import Feed from './Feed';
 
@@ -48,9 +49,16 @@ function Chat() {
     // HACK: for initial load -----
     !hidden &&
       // ----- HACK
-      setMessages(messages => [...messages, { coach: 0, message: message }]);
+      setMessages(messages => [
+        ...messages,
+        { coach: 0, message: message, id: uuid() },
+      ]);
 
     setIsTyping(true);
+    setMessages(messages => [
+      ...messages,
+      { coach: 1, message: '...', id: uuid() },
+    ]);
 
     try {
       const res = await fetch(url, {
@@ -62,7 +70,10 @@ function Chat() {
       });
       const { response, context } = await res.json();
 
-      setMessages(messages => [...messages, { coach: 1, message: response }]);
+      setMessages(messages => [
+        ...messages.slice(0, messages.length - 1),
+        { ...messages[messages.length - 1], message: response },
+      ]);
       setContext(cleanContext(context));
       setUserMessage('');
     } catch (err) {
@@ -80,7 +91,11 @@ function Chat() {
       setIntents(cleanIntents(intents));
       setMessages(messages => [
         ...messages,
-        { coach: 1, message: user ? `Hello, ${user.first_name}` : 'Hello' },
+        {
+          coach: 1,
+          message: user ? `Hello, ${user.first_name}` : 'Hello',
+          id: uuid(),
+        },
       ]);
       setIsTyping(false);
     })();
