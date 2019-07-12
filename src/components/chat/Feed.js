@@ -7,6 +7,7 @@ const Feed = ({ messages, isTyping, sendMessage, possibleIntents }) => {
     enter: { transform: 'translate3d(0,0px,0)' },
     leave: { transform: 'translate3d(0,4px,0)' },
   });
+
   return (
     <div className="conversation">
       {dialogTransitions.map(({ item: message, props, key }) => (

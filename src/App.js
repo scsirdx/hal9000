@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ChatAdvanced from './components/chat_advanced';
+import Chat from './components/chat';
 
 import './App.css';
 
@@ -8,7 +8,7 @@ function App() {
   return (
     <div className="App">
       <main>
-        <ChatAdvanced />
+        <Chat />
       </main>
     </div>
   );
